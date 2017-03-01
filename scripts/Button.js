@@ -30,7 +30,7 @@ export class Button extends React.Component {
                 alert("You need to be logged in to chat.");
             }
         });
-
+        
     }
     render() {
         return (

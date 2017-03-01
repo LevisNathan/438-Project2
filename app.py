@@ -4,44 +4,54 @@ import flask_socketio
 import flask_sqlalchemy
 import requests
 import psycopg2
+
 app = flask.Flask(__name__)
+
 import models
 socketio = flask_socketio.SocketIO(app)
 all_numbers = []
-num=0
 def chatbot(vari):
-    if(vari=="hello"):
+    vari
+    if(vari=="!!hello"):
         all_numbers.append("Hi i'm chatbot how are you?")
-    if(vari=="hi chatbot"):
-            all_numbers.append("Hi user hope you are having a good afternoon :D")
-    if(vari=="chatbot sing"):
+    elif(vari=="!!about"):
+            all_numbers.append("This is a chat room created by Nathan Levis")
+    elif(vari=="!!sing"):
             all_numbers.append("laydal laydal laydal!!!!!")
-    if(vari=="connected"):
+    elif(vari=="!!help"):
+        all_numbers.append("Chatbot have a couple of commands: ")
+        all_numbers.append("User !! before all of these")
+        all_numbers.append("say, hello, about, tweet, sing")
+    elif(vari=="!!say"):
+        all_numbers.append("")
+    elif(vari=="!!tweet"):
+        all_numbers.append("")
+    elif(vari=="connected"):
         all_numbers.append("A user has joined the chat.")
-    if(vari=="disconnected"):
+    elif(vari=="disconnected"):
        all_numbers.append("A user has left the chat.") 
+    elif(vari==""):
+        all_numbers.append("")
     socketio.emit('all numbers', {
         'numbers': all_numbers
     })
+
 @app.route('/')
 def hello():
     chatbot("hello")
     return flask.render_template('index.html')
-# all_numbers = []
+
 @socketio.on('connect')
 def on_connect():
     print 'Someone connected!'
     chatbot("connected")
-    # all_numbers.append(data['number'])
-    # socketio.emit('all numbers', {
-    #     'numbers': all_numbers
-    # })
+
 
 @socketio.on('disconnect')
 def on_disconnect():
     print 'Someone disconnected!'
     chatbot("disconnected")
-num=0
+
 @socketio.on('new number')
 def on_new_number(data):
     # print 'Got a new message with data: ', data
