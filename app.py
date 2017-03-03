@@ -14,32 +14,56 @@ import models
 socketio = flask_socketio.SocketIO(app)
 all_numbers = []
 def chatbot(vari):
-    vari
     if(vari=="!!hello"):
-        all_numbers.append("Hi i'm chatbot how are you?")
+        mng ="Hi i'm chatbot how are you?"
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="!!about"):
-            all_numbers.append("This is a chat room created by Nathan Levis")
+        mng = "This is a chat room created by Nathan Levis"
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="!!sing"):
-            all_numbers.append("laydal laydal laydal!!!!!")
+        mng = "laydal laydal laydal!!!!!"
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="!!help"):
-        all_numbers.append("Chatbot have a couple of commands: ")
-        all_numbers.append("User !! before all of these")
-        all_numbers.append("say, hello, about, tweet, sing")
+        mng="Chatbot have a couple of commands: "
+        mng ="User !! before all of these"
+        mng = "say, hello, about, tweet, sing"
+        all_numbers.append(mng)
+        mes_to_data(mng)
+        all_numbers.append(mng)
+        mes_to_data(mng)
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="!!say"):
-        all_numbers.append("")
+        mng = " "
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="!!tweet"):
         t =twit()
         tweety = t.text
-        all_numbers.append(tweety)
+        mng = tweety
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="connected"):
-        all_numbers.append("A user has joined the chat.")
+        mng = "A user has joined the chat."
+        all_numbers.append(mng)
+        mes_to_data(mng)
     elif(vari=="disconnected"):
-       all_numbers.append("A user has left the chat.") 
+        mng = "A user has left the chat."
+        all_numbers.append(mng) 
+        mes_to_data(mng)
     elif(vari==""):
         all_numbers.append("")
+        mes_to_data(mng)
     socketio.emit('all numbers', {
         'numbers': all_numbers
     })
+def mes_to_data(mng):
+    message = models.Message(mng)
+    models.db.session.add(message)
+    models.db.session.commit()
 def twit():
     consumer_key=  "qOYlXsiQhXjU5LHvF7nWokRCX"
     consumer_secret = "6wkXylgkKs4htvol2MysqJRhzZ900OqYMPhYlLeVJxux4joyWq"
