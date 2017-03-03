@@ -14,21 +14,23 @@ import models
 socketio = flask_socketio.SocketIO(app)
 all_numbers = []
 def chatbot(vari):
+    #split the string here then work with tokens
+    
     if(vari=="!!hello"):
-        mng ="Hi i'm chatbot how are you?"
+        mng ="Chatbot: Hi i'm chatbot how are you?"
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!about"):
-        mng = "This is a chat room created by Nathan Levis"
+        mng = "Chatbot: This is a chat room created by Nathan Levis"
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!sing"):
-        mng = "laydal laydal laydal!!!!!"
+        mng = "Chatbot: laydal laydal laydal!!!!!"
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!help"):
-        mng="Chatbot have a couple of commands: "
-        mng ="User !! before all of these"
+        mng = "Chatbot have a couple of commands: "
+        mng = "User !! before all of these"
         mng = "say, hello, about, tweet, sing"
         all_numbers.append(mng)
         mes_to_data(mng)
@@ -37,21 +39,22 @@ def chatbot(vari):
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!say"):
-        mng = " "
+        va = vari.split('!!say ' , 1)
+        mng = va[1]
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!tweet"):
         t =twit()
         tweety = t.text
-        mng = tweety
+        mng = "Chatbot: " + tweety
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="connected"):
-        mng = "A user has joined the chat."
+        mng = "Chatbot: A user has joined the chat."
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="disconnected"):
-        mng = "A user has left the chat."
+        mng = "Chatbot: A user has left the chat."
         all_numbers.append(mng) 
         mes_to_data(mng)
     elif(vari==""):
@@ -106,17 +109,14 @@ def on_new_number(data):
     
     response = requests.get('https://graph.facebook.com/v2.8/me?fields=id%2Cname%2Cpicture&access_token=' + data['facebook_user_token'])
     json = response.json()
-    
-    all_numbers.append(data['number'])
+    mes = json['name']+": " + data['number']
+    all_numbers.append(mes)
     
     socketio.emit('all numbers', {
         'numbers': all_numbers
     })
     chatbot(data['number'])
-    message = models.Message(data['number'])
-    models.db.session.add(message)
-    models.db.session.commit()
-    
+    mes_to_data(mes)
 if __name__ == '__main__':
     socketio.run(
         app,
