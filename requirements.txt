@@ -4,3 +4,4 @@ SQLAlchemy
 flask_sqlalchemy
 requests
 psycopg2
+tweepy
