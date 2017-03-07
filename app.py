@@ -15,9 +15,9 @@ socketio = flask_socketio.SocketIO(app)
 all_numbers = []
 def chatbot(vari):
     #split the string here then work with tokens
-    
+    # ex = vari.split('!!')
     if(vari=="!!hello"):
-        mng ="Chatbot: Hi i'm chatbot how are you?"
+        mng ="Chatbot: Hi i'm chatbot"
         all_numbers.append(mng)
         mes_to_data(mng)
     elif(vari=="!!about"):
