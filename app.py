@@ -5,8 +5,8 @@ import flask_sqlalchemy
 import requests
 import psycopg2
 import tweepy
-import models
 from random import randint, random
+
 
 app = flask.Flask(__name__)
 

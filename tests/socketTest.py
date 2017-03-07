@@ -17,4 +17,4 @@ class socket_tests(unittest.TestCase):
             print i
 
 if __name__ == '__main__':
-    unittest.main
+    unittest.main()
